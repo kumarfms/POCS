@@ -1,0 +1,85 @@
+Questions :
+
+There are three party's involved 
+1) Application integration components 
+2) CEERS camel component   --> will call CEERSCSCOMP 
+3) CEERS system
+
+
+From Integration we are using CEERSCSCOMP(CEERS camel component) to push the audit,state and notification messages to CEERS system .
+
+
+Ex : Take an sample route like file to FTP 
+
+<Route>
+<From uri=file://C:/Temp/Data>
+<to uri=CEERSCSCOMP?eventype=audit;messagetype=heartbeatmessage;>
+<to uri=ftp://D:remote/data>
+
+Above route sends file to remote FTP location while doing so its pushing the 
+message to CEERS system via CEERS camel component CEERSCSCOMP .
+CEERSCSCOMP is the custom camel component , it does the message transformation 
+to CEERS message format and calls the CEERS service to post the message.
+
+
+original message format :
+
+From File :
+
+<heartbeat>
+<timestamp date="15-2-2016" type="online">
+</heartbeat>
+
+After transformation to CEERS format by CEERS camel component 
+
+Final CEERS format :
+
+<CEERS messagetype="heartbeatmessage" eventye="audit">
+<payload>CDATA[<heartbeat>
+<timestamp date="15-2-2016" type="online">
+</heartbeat>]
+</Payload>
+</CEERS>
+
+
+
+
+What is the buisness functionality of ceers system (Not CEERS camel component).
+What is the message format / schema definition does the CEERS accept ?
+If possible share one example message sent to CEERS system ?
+
+How is the CEERS system exposed ,means the protocol used to access the CEERS system 
+like http , tcp or JMS .
+
+
+
+blueprint.xml you shared with me is not an complete one I guess ,  it might be splitted into two files 
+check that as well .
+
+Understanding  of existing route
+
+Step 1:
+From integration routes we will push the message to ceers camel component with the payload and uri paramters 
+like messagtype, component name , severity etc .
+
+
+Step 2:
+
+Internally camel ceers component will pick the message from vm endpoint and based on
+xpath ,payload routed to particular queues like audit, state .
+
+Step 3:
+
+From those Queues again message unmarshalled , transformed and sent to remote queues like
+audit , state.
+
+Info: 
+
+They used XA JMS resources for distributed transaction . 
+
+
+
+Things I have done today :
+
+Working on adding the CEERS camel component to simple route to see
+how the CEERS component works internally . 
