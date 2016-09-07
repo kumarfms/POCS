@@ -1,0 +1,39 @@
+cleanupOfficeCharacters(pairString) used multiple times in the the same flow .
+
+Remove duplicate element
+
+Remove configuration file path . And do we really need default properties .
+
+Replace utilities with JDK functionalities
+
+Improve the Exception processor ,See if we can add dead letter channel and push the message from dead letter channel to alert through mail.
+
+Rename the underscore variables to java naming convention
+
+Remove the marshaller processor with camel marshall component .
+
+Simplify the route by using dynamic recipient list pattern
+
+Abstracting method logic where necessary
+
+Seperate preprocessing and jaxb logic ,in the sense remove the implementaion logic in jaxb pojos
+ 
+
+
+
+
+Ask questions about byterange and xpath usage in payload
+
+Ask questions about resubmit logic 
+
+Ask questions about Userdata usage
+
+Get the ceers requirement document
+
+Ask whether persistence is needed or not ?For now the persistense is not enabled in default properties then why we need to go for queues .
+If persistence is not enabled then why we need the JTA
+
+
+
+
+
